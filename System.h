@@ -45,27 +45,29 @@ class System
     }
 
     void Start(){
-        while(!input.empty()){
-            ///1.Fetch Arriving Customers from Input into Waiting Queue
-            if(input.front()->getArrival()==clock)
+
+        while(!input.empty() ){
+            ///1.Fetch All Arriving Customers from Input into Waiting Queue
+
+        while(input.front()->getArrival()==clock)
             {
+                waitingQueue.push(input.front());
+                input.pop();
+            }
+
+            //clock++
+        }
+    }
+
+    //void enterWaitingQueue()
+};
+
                 ///1.Fetch Arriving Customers from Input into Waiting Queue
                 ///2.Check for Interruptions and Execute Interruption Handling
                 ///!-- Add Event Data in Customer
                 ///3.Fetch Customers into Empty Servers
                 ///!-- Save Customer Data in Servers
                 ///
-
-            }
-            else
-            {
-                clock++;
-            }
-        }
-    }
-
-    //void enterWaitingQueue()
-};
 
 /*
 void insertionSort()

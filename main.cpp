@@ -4,6 +4,7 @@
 #include <iterator>
 #include "System.h"
 #include "Customer.h"
+#include "Server.h"
 using namespace std;
 
 int main()
@@ -13,6 +14,14 @@ int main()
     c1 = c2;
     cout << c1->getArrival();
 
+    Server S1;
+    custEvent cste = cserve;
+    cout << "Hey" << endl << endl;
+    CEvent ce(1,cste);
+    S1.custHistory[c1].push_back(ce);
+    list<CEvent>::iterator it;
+    for(it = S1.custHistory[c1].begin();it!=S1.custHistory[c1].end();++it)
+        cout<< it->getEventTime();
     /*Customer c1(1,3);
     Customer c2(0,3);
     Customer c3(2,3);

@@ -1,7 +1,6 @@
 #ifndef CEVENT_H
 #define CEVENT_H
-#include "Customer.h"
-#include "Server.h"
+//#include "Server.h"
 
 enum custEvent{
   cserve , cexit
@@ -16,15 +15,26 @@ class CEvent
 {
     custEvent CEventType;
     int CEventTime;
-    Server* CServer;
+    //Server* CServer;
     public:
 
         CEvent(){
         }
-        CEvent(int tm, custEvent evnt,Server* srv){
+
+        //CEvent(int tm, custEvent evnt,Server* srv){
+        CEvent(int tm, custEvent evnt){
             CEventTime = tm;
             CEventType = evnt;
-            CServer = srv;
+            //CServer = srv;
         };
+
+        custEvent getEventType(){
+            return CEventType;
+        }
+
+        int getEventTime(){
+            return CEventTime;
+        }
+
 };
 #endif // CEVENT_H

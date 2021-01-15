@@ -19,7 +19,7 @@ class Customer
 {
     ///list<int> Interruptions; -----> Global
     int Departure, ServiceTime,Arrival,RemainingTime;
-    CEvent c;
+    //list<CEvent> CustEvents;
     public:
 
     getArrival(){
@@ -36,6 +36,8 @@ class Customer
 
     }
 
+    public:
+    Customer(){cout<<"hello";}
     ///Report()
 
 };

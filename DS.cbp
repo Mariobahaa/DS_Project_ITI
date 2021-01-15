@@ -34,10 +34,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="CEvent.cpp" />
+		<Unit filename="CEvent.h" />
 		<Unit filename="Customer.cpp" />
 		<Unit filename="Customer.h" />
+		<Unit filename="SEvent.cpp" />
+		<Unit filename="SEvent.h" />
+		<Unit filename="Server.cpp" />
+		<Unit filename="Server.h" />
 		<Unit filename="System.cpp" />
 		<Unit filename="System.h" />
+		<Unit filename="eventHelpers.cpp" />
+		<Unit filename="eventHelpers.h" />
 		<Unit filename="main.cpp" />
 		<Extensions />
 	</Project>
