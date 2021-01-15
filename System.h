@@ -12,38 +12,37 @@ using namespace std;
 
 class System
 {
-    queue<Customer> input;
-    queue<Customer> waitingQueue;
+    queue<Customer*> input;
+    queue<Customer*> waitingQueue;
     //list<Server> servers;
     int serversNo;
     int custNo;
     int clock;
 
     public:
-    System(list<Customer>inpt, int serversNum,int custNum){
+    System(list<Customer*>inpt, int serversNum,int custNum){
         serversNo = serversNum;
         custNo = custNum;
         clock = 0;
 
-        inpt.sort( [](Customer a, Customer b) {
-        return a.Arrival < b.Arrival;
+        inpt.sort( [](Customer* a, Customer* b) {
+        return a->Arrival < b->Arrival;
         });
 
 
-    queue<Customer> Q;
-    list<Customer>::iterator it;
+    list<Customer*>::iterator it;
     for(it=inpt.begin(); it != inpt.end(); ++it)
     {
-        Q.push(*it);
+        input.push(*it);
     }
 
-    cout<< "Q Size: " << Q.size() << endl;
+
 
     }
 
     void StartSystem(){
         while(!input.empty()){
-            if(input.front().Arrival==clock)
+            if(input.front()->Arrival==clock)
             {
                 ///enter waiting queue
 

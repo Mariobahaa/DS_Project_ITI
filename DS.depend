@@ -1,13 +1,24 @@
 # depslib dependency file v1.0
-1610240290 source:e:\cdb\ds\main.cpp
+1610697269 source:e:\cdb\ds\main.cpp
 	<iostream>
+	<queue>
+	<list>
+	<iterator>
+	"System.h"
+	"Customer.h"
 
 1610653390 source:e:\cdb\ds\customer.cpp
 
-1610653344 e:\cdb\ds\customer.h
+1610655684 e:\cdb\ds\customer.h
 	<iostream>
 	<queue>
 	<list>
 
 1610653299 source:e:\cdb\ds\system.cpp
+
+1610697448 e:\cdb\ds\system.h
+	<iostream>
+	<queue>
+	<list>
+	"Customer.h"
 
