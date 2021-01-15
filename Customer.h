@@ -6,21 +6,32 @@
 #include <list>
 
 
+
 using namespace std;
+
+///Customer Events
+///entry: enter waiting queue
+///interrupted: interrupted at service
+///exit:
+
 
 class Customer
 {
     list<int> Interruptions;
-    int Departure, ServiceTime;
+    int Departure, ServiceTime,Arrival,RemainingTime;
     public:
-    int Arrival;
+
+    getArrival(){
+        return Arrival;
+    }
     //Customer(list<int>Intr, int arrival, int departure, int st){
     Customer(int arrival, int st){
 
         //Interruptions = Intr;
         Arrival = arrival;
         ServiceTime= st;
-        Departure = 0;
+        RemainingTime = st;
+        Departure = -1;
     }
 
 };

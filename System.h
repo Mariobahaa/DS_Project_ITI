@@ -25,14 +25,14 @@ class System
         custNo = custNum;
         clock = 0;
 
-        GenerateSortedInputQ();
+        GenerateSortedInputQ(inpt);
 
     }
 
     void GenerateSortedInputQ(list<Customer*> inpt)
     {
         inpt.sort( [](Customer* a, Customer* b) {
-        return a->Arrival < b->Arrival;
+        return a->getArrival() < b->getArrival();
         });
 
 
@@ -46,9 +46,15 @@ class System
 
     void Start(){
         while(!input.empty()){
-            if(input.front()->Arrival==clock)
+            ///1.Fetch Arriving Customers from Input into Waiting Queue
+            if(input.front()->getArrival()==clock)
             {
-                ///enter waiting queue
+                ///1.Fetch Arriving Customers from Input into Waiting Queue
+                ///2.Check for Interruptions and Execute Interruption Handling
+                ///!-- Add Event Data in Customer
+                ///3.Fetch Customers into Empty Servers
+                ///!-- Save Customer Data in Servers
+                ///
 
             }
             else
@@ -75,3 +81,5 @@ void insertionSort()
 head=selected;
     }
 */
+
+//Interruptions Per Server

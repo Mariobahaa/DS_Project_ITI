@@ -24,7 +24,7 @@ int main()
     list<Customer*>::iterator it;
     for(it=inpt.begin(); it != inpt.end(); ++it)
     {
-        Q.push(*it);
+        Q.push(*it); //enqueue
     }
 
     cout<< "Q Size: " << Q.size() << endl;
