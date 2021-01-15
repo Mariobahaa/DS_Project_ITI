@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1610702226 source:e:\cdb\ds\main.cpp
+1610706028 source:e:\cdb\ds\main.cpp
 	<iostream>
 	<queue>
 	<list>
@@ -9,10 +9,11 @@
 
 1610653390 source:e:\cdb\ds\customer.cpp
 
-1610704973 e:\cdb\ds\customer.h
+1610708326 e:\cdb\ds\customer.h
 	<iostream>
 	<queue>
 	<list>
+	"CEvent.h"
 
 1610653299 source:e:\cdb\ds\system.cpp
 
@@ -21,4 +22,15 @@
 	<queue>
 	<list>
 	"Customer.h"
+
+1610704675 source:e:\cdb\ds\eventhelpers.cpp
+
+1610707627 source:e:\cdb\ds\cevent.cpp
+
+1610708324 e:\cdb\ds\cevent.h
+	"Customer.h"
+
+1610703193 source:e:\cdb\ds\server.cpp
+
+1610707989 source:e:\cdb\ds\sevent.cpp
 

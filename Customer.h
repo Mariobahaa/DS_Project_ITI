@@ -4,7 +4,7 @@
 #include <iostream>
 #include <queue>
 #include <list>
-
+#include "CEvent.h"
 
 
 using namespace std;
@@ -19,6 +19,7 @@ class Customer
 {
     list<int> Interruptions;
     int Departure, ServiceTime,Arrival,RemainingTime;
+    CEvent c;
     public:
 
     getArrival(){
@@ -32,6 +33,7 @@ class Customer
         ServiceTime= st;
         RemainingTime = st;
         Departure = -1;
+
     }
 
 };

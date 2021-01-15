@@ -3,7 +3,9 @@
 #include <iostream>
 #include <list>
 #include <queue>
-#include <Customer.h>
+#include "Customer.h"
+#include "CEvent.h"
+#include "SEvent.h"
 
 ///class server --> Idle/Working, LinkedList<Customer>, LisnkedList<int> (Timestamp)
 
@@ -11,9 +13,9 @@ using namespace std;
 
 class Server
 {
+
     bool working;
-    list<Customer*> customerHistory;
-    list<int> entryTimes;
+    list<SEvent> customerHistory;
     public:
         Server(){
             working = false;
