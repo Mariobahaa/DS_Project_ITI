@@ -7,7 +7,7 @@
 #include "Customer.h"
 #include "Server.h"
 
-#endif // SYSTEM_
+#endif // SYSTEM
 
 using namespace std;
 
@@ -28,8 +28,11 @@ class System
         custNo = custNum;
         clock = 0;
 
+
+
         GenerateSortedInputQ(inpt);
         GenerateServers();
+        GenerateSortedIntrptQ(intr);
 
     }
 

@@ -5,7 +5,20 @@
 #include "System.h"
 #include "Customer.h"
 #include "Server.h"
+#include <utility>
+#include <algorithm>
+#include <functional>
+
+
 using namespace std;
+
+
+    list<pair<int,Server*>> intr;
+    list<pair<int, Server*> >::iterator it2;
+int Print( pair<int, Server*>  &intr)
+{
+    cout <<"\ninterruption at: "<< intr.first;
+}
 
 int main()
 {
@@ -22,6 +35,20 @@ int main()
     list<CEvent>::iterator it;
     for(it = S1.custHistory[c1].begin();it!=S1.custHistory[c1].end();++it)
         cout<< it->getEventTime();
+
+   pair <int, Server*> intr1  (2,&S1);
+   pair <int, Server*> intr2  (4,&S1);
+   pair <int, Server*> intr3  (5,&S1);
+
+
+    intr.push_back(intr1);
+    intr.push_back(intr2);
+    intr.push_back(intr3);
+
+     for_each(intr.begin(), intr.end(), Print);
+
+
+
     /*Customer c1(1,3);
     Customer c2(0,3);
     Customer c3(2,3);
