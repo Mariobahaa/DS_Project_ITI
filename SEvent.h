@@ -1,4 +1,4 @@
-#ifndef SEVENT_H
+/*#ifndef SEVENT_H
 #define SEVENT_H
 
 #include "Customer.h"
@@ -17,4 +17,4 @@ class SEvent
 
 };
 
-#endif // SEVENT_H
+#endif // SEVENT_H*/

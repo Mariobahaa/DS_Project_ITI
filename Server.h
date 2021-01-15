@@ -5,7 +5,7 @@
 #include <queue>
 #include "Customer.h"
 #include "CEvent.h"
-#include "SEvent.h"
+//#include "SEvent.h"
 
 ///class server --> Idle/Working, LinkedList<Customer>, LisnkedList<int> (Timestamp)
 
@@ -15,7 +15,8 @@ class Server
 {
 
     bool working;
-    list<SEvent> customerHistory;
+    //list<SEvent> customerHistory;
+    Customer* CurrCustomer; // Currently Served Customer in this Server
     public:
         Server(){
             working = false;

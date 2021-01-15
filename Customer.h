@@ -17,7 +17,7 @@ using namespace std;
 
 class Customer
 {
-    list<int> Interruptions;
+    ///list<int> Interruptions; -----> Global
     int Departure, ServiceTime,Arrival,RemainingTime;
     CEvent c;
     public:
@@ -35,6 +35,8 @@ class Customer
         Departure = -1;
 
     }
+
+    ///Report()
 
 };
 
