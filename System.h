@@ -3,6 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <list>
+
 #include "Customer.h"
 
 #endif // SYSTEM_
@@ -19,13 +20,24 @@ class System
     int clock;
 
     public:
-    System(queue<Customer>inpt, int serversNum,int custNum){
+    System(list<Customer>inpt, int serversNum,int custNum){
         serversNo = serversNum;
         custNo = custNum;
         clock = 0;
 
-        //inpt.sort([](Customer * lhs, Customer * rhs) {return lhs->Arrival < rhs->Arrival;});
-        input =inpt;
+        inpt.sort( [](Customer a, Customer b) {
+        return a.Arrival < b.Arrival;
+        });
+
+
+    queue<Customer> Q;
+    list<Customer>::iterator it;
+    for(it=inpt.begin(); it != inpt.end(); ++it)
+    {
+        Q.push(*it);
+    }
+
+    cout<< "Q Size: " << Q.size() << endl;
 
     }
 

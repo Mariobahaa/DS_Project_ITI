@@ -2,7 +2,6 @@
 #include <queue>
 #include <list>
 #include <iterator>
-#include <algorithm>
 #include "System.h"
 #include "Customer.h"
 using namespace std;
@@ -20,21 +19,18 @@ int main()
         return a.Arrival < b.Arrival;
     });
 
-    queue<Customer> q;
-    q.push(c1);
-    q.push(c2);
-    q.push(c3);
 
-    list<Customer>::iterator it;
-    //xxx q.sort([](Customer * lhs, Customer * rhs) {return lhs->Arrival < rhs->Arrival;});
-    /*
+    queue<Customer> Q;
     list<Customer>::iterator it;
     for(it=inpt.begin(); it != inpt.end(); ++it)
-        cout << it->Arrival << endl;
-    */
-    for(int i=0;i<q.size();i++){
-        cout << q.front().Arrival << endl;
-        q.pop();
+    {
+        Q.push(*it);
+    }
+
+    cout<< "Q Size: " << Q.size() << endl;
+    while(!Q.empty()){
+        cout << Q.front().Arrival << endl;
+        Q.pop();
     }
     return 0;
 }
@@ -48,3 +44,8 @@ int main()
 ///LinkedList<event_type>  LinkedList<time> (Event, It's Time stamp)
 ///
 
+/*
+    list<Customer>::iterator it;
+    for(it=inpt.begin(); it != inpt.end(); ++it)
+        cout << it->Arrival << endl;
+    */
