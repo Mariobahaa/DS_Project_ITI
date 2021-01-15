@@ -5,6 +5,7 @@
 #include <list>
 
 #include "Customer.h"
+#include "Server.h"
 
 #endif // SYSTEM_
 
@@ -14,19 +15,29 @@ class System
 {
     queue<Customer*> input;
     queue<Customer*> waitingQueue;
-    //list<Server> servers;
+    queue<pair<int,Server*>> Interruptions; //time,Interrupted Server
+    list<Server*> Servers;
+
     int serversNo;
     int custNo;
     int clock;
 
     public:
-    System(list<Customer*>inpt, int serversNum,int custNum){
+    System(list<Customer*>inpt, list<pair<int,Server*>> intr, int serversNum,int custNum){
         serversNo = serversNum;
         custNo = custNum;
         clock = 0;
 
         GenerateSortedInputQ(inpt);
+        GenerateServers();
 
+    }
+
+    void GenerateServers(){
+        for(int i=0;i<serversNo;i++)
+        {
+            Servers.push_back(new Server(i+1));
+        }
     }
 
     void GenerateSortedInputQ(list<Customer*> inpt)
@@ -44,21 +55,36 @@ class System
 
     }
 
+    void GenerateSortedIntrptQ(list<pair<int,Server*>> intr)
+    {
+        inpt.sort( [](pair<int,Server*> a, pair<int,Server*>  b) {
+        return a.first < b.first;
+        });
+
+
+        list<pair<int,Server*>>::iterator it;
+        for(it=intr.begin(); it != intr.end(); ++it)
+        {
+            Interruptions.push(*it);
+        }
+    }
+
     void Start(){
 
         while(!input.empty() ){
             ///1.Fetch All Arriving Customers from Input into Waiting Queue
 
-        while(input.front()->getArrival()==clock)
+            while(input.front()->getArrival()==clock && !input.empty())
             {
                 waitingQueue.push(input.front());
                 input.pop();
             }
+            ///2.Check for Interruptions and Execute Interruption Handling
+            ///!-- Add Event Data in Customer
 
             //clock++
         }
     }
-
     //void enterWaitingQueue()
 };
 
