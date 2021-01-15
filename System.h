@@ -57,7 +57,7 @@ class System
 
     void GenerateSortedIntrptQ(list<pair<int,Server*>> intr)
     {
-        inpt.sort( [](pair<int,Server*> a, pair<int,Server*>  b) {
+        intr.sort( [](pair<int,Server*> a, pair<int,Server*>  b) {
         return a.first < b.first;
         });
 
