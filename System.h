@@ -25,22 +25,26 @@ class System
         custNo = custNum;
         clock = 0;
 
+        GenerateSortedInputQ();
+
+    }
+
+    void GenerateSortedInputQ(list<Customer*> inpt)
+    {
         inpt.sort( [](Customer* a, Customer* b) {
         return a->Arrival < b->Arrival;
         });
 
 
-    list<Customer*>::iterator it;
-    for(it=inpt.begin(); it != inpt.end(); ++it)
-    {
-        input.push(*it);
-    }
-
-
+        list<Customer*>::iterator it;
+        for(it=inpt.begin(); it != inpt.end(); ++it)
+        {
+            input.push(*it);
+        }
 
     }
 
-    void StartSystem(){
+    void Start(){
         while(!input.empty()){
             if(input.front()->Arrival==clock)
             {
