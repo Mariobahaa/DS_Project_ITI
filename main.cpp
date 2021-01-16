@@ -10,6 +10,65 @@
 using namespace std;
 int main()
 {
+
+    cout << "\t\t\tWelcome!"<<endl << endl;
+    int CustomerNum, ServersNum;
+    cout << "Enter Number of Customers" <<endl;
+    cin >> CustomerNum;
+    cout << "Enter Number of Servers" << endl;
+    cin >> ServersNum;
+
+    list<Customer*> customers;
+    for(int i=0;i<CustomerNum;i++){
+        cout << "Enter Customer " << i+1 << " 's Data"<<endl;
+        int arrival, serviceTime;
+        cout << "Enter Customer " << i+1 << " 's Arrival Time"<<endl;
+        cin >> arrival;
+        cout << "Enter Customer " << i+1 << " 's Service Time"<<endl;
+        cin >> serviceTime;
+
+        Customer C(arrival,serviceTime,i+1);
+        customers.push_back(&C);
+    }
+
+    list<Server*> servers;
+    for(int i=0; i<ServersNum; i++)
+    {
+        servers.push_back(new Server(i+1));
+    }
+
+    cout << endl << endl;
+
+    list<pair<int,Server*>> interruptions;
+    int interNum;
+    int time;
+    list<Server*>::iterator it;
+    it= servers.begin();
+    for(int i=0;i<ServersNum;i++)
+    {
+        cout << "Enter Number of Interruptions of Server " << i+1 <<endl;
+        cin >> interNum;
+        for(int i=0;i<interNum;i++)
+        {
+            cout << "Enter Time of Interruption " << i+1 << endl;
+            cin >> time;
+            pair <int, Server*> p(time,*it);
+            interruptions.push_back(p);
+        }
+        if(it!=servers.end())
+            it++;
+    }
+
+    System Sys(customers,servers,interruptions,ServersNum,CustomerNum);
+    Sys.Start();
+
+
+    return 0;
+}
+
+/*
+int main()
+{
     Customer* c1 = NULL;
     Customer* c2 = new Customer(0,0,1);
     c1 = c2;
@@ -23,7 +82,8 @@ int main()
     list<CEvent>::iterator it;
     for(it = S1.custHistory[c1].begin();it!=S1.custHistory[c1].end();++it)
         cout<< it->getEventTime();*/
-
+/////////////////////////below
+/*
    pair <int, Server*> intr1  (6,&S1);
    pair <int, Server*> intr2  (4,&S1);
    pair <int, Server*> intr3  (2,&S1);
@@ -61,8 +121,11 @@ int main()
         cout << Q.front()->Arrival << endl;
         Q.pop();
     }*/
+    /*
     return 0;
-}
+}*/
+
+
 
 
 

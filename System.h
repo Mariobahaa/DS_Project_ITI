@@ -57,6 +57,7 @@ class System
         }
     }
 
+
     void GenerateSortedIntrptQ(list<pair<int,Server*>> intr)
     {
         intr.sort( [](pair<int,Server*> a, pair<int,Server*>  b)
@@ -65,16 +66,15 @@ class System
         });
 
 
-        list<pair<int, Server*> >::iterator it2;
+        /*list<pair<int, Server*> >::iterator it2;
         for_each(intr.begin(), intr.end(), Print);///USES ALGORITHM LIBRARY
-
+    */
 
         list<pair<int,Server*>>::iterator it;
         for(it=intr.begin(); it != intr.end(); ++it)
         {
             Interruptions.push(*it);
         }
-
     }
 
 
@@ -162,14 +162,15 @@ class System
 
 
 public:
-    System(list<Customer*>inpt, list<pair<int,Server*>> intr, int serversNum,int custNum)
+    System(list<Customer*>inpt, list<Server*> servers, list<pair<int,Server*>> intr, int serversNum,int custNum)
     {
         serversNo = serversNum;
         custNo = custNum;
         clock = 0;
+        Servers= servers;
 
         GenerateSortedInputQ(inpt);
-        GenerateServers();
+        //GenerateServers();
         GenerateSortedIntrptQ(intr);
 
     }
