@@ -15,11 +15,11 @@ class Server
     //Cust* ,( event, time), ( event, time)
     bool working;
     //list<SEvent> customerHistory;
-    int ServerID;
+
     Customer * CurrCustomer ; // Currently Served Customer in this Server
     map<Customer*, list<CEvent>> custHistory;
 public:
-
+    int ServerID;
     Server()
     {
         working = false;
