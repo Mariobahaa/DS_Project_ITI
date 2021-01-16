@@ -34,27 +34,6 @@ class System
     int custNo;
     int clock;
 
-public:
-    System(list<Customer*>inpt, list<pair<int,Server*>> intr, int serversNum,int custNum)
-    {
-        serversNo = serversNum;
-        custNo = custNum;
-        clock = 0;
-
-        GenerateSortedInputQ(inpt);
-        GenerateServers();
-        GenerateSortedIntrptQ(intr);
-
-    }
-    /*
-            System(list<pair<int,Server*>> intrr)///3amalt constructor tany 3shan agrb 3leh el interruptions bs
-            {
-
-            GenerateSortedIntrptQ(intrr);
-
-            }*/
-
-
     void GenerateServers()
     {
         for(int i=0; i<serversNo; i++)
@@ -78,6 +57,7 @@ public:
         }
     }
 
+
     void GenerateSortedIntrptQ(list<pair<int,Server*>> intr)
     {
         intr.sort( [](pair<int,Server*> a, pair<int,Server*>  b)
@@ -86,74 +66,149 @@ public:
         });
 
 
-        list<pair<int, Server*> >::iterator it2;
+        /*list<pair<int, Server*> >::iterator it2;
         for_each(intr.begin(), intr.end(), Print);///USES ALGORITHM LIBRARY
-
+        */
 
         list<pair<int,Server*>>::iterator it;
         for(it=intr.begin(); it != intr.end(); ++it)
         {
             Interruptions.push(*it);
         }
-
     }
 
 
 
-    void Start()
+    ///1.Fetch All Arriving Customers from Input into Waiting Queue
+    void fetchArriving()
     {
-
-        while(!input.empty() )
+        bool exit = false;
+        while(!input.empty() && !exit)
         {
-            ///1.Fetch All Arriving Customers from Input into Waiting Queue
-
-            while(input.front()->getArrival()==clock && !input.empty())
+            if(input.front()->getArrival()==clock)
             {
                 waitingQueue.push(input.front());
                 input.pop();
             }
-            ///2.Check for Interruptions and Execute Interruption Handling
-//
+            else {
+                exit = true;
+            }
+        }
+    }
 
 
-            Customer * currCustomer;
-            if(!Interruptions.empty())
-                while(!Interruptions.empty()&&Interruptions.front().first==clock)
-                {
-                    if(Interruptions.front().second->getWorking()==true)
-                    {
-                        currCustomer = Interruptions.front().second->getCurrCustomer();
-                        waitingQueue.push(currCustomer);
-                        Interruptions.front().second->setWorking(false);
+    ///2.Check for Interruptions and Execute Interruption Handling
+    void checkIntrpt()
+    {
 
-                        ///!-- Add Event Data in Customer
-                        CEvent custEvent(clock,cexit);
-                        Interruptions.front().
-                        second->addEvent(currCustomer,custEvent);
-                    }
-                    Interruptions.pop();
-                }
-            ///3.Fetch Customers into Empty Servers
-            Server* server;
-            if(!waitingQueue.empty()&& !Servers.empty())
+        Customer * currCustomer;
+        if(!Interruptions.empty())
+            while(!Interruptions.empty()&&Interruptions.front().first==clock)
             {
-                list<Server*>::iterator srvit;
-                for(srvit=Servers.begin(); srvit!=Servers.end(); srvit++)
+                if(Interruptions.front().second->getWorking()==true)
                 {
-                    server = *srvit;
-                    if(!server->getWorking())
-                    {
-                        server->setCurrCustomer(waitingQueue.front());
-                        waitingQueue.pop();
-                        server->setWorking(true);
+                    currCustomer = Interruptions.front().second->getCurrCustomer();
+                    waitingQueue.push(currCustomer);
+                    Interruptions.front().second->setWorking(false);
 
-                        ///!-- Add Event Data in Customer
-                        CEvent custEvent(clock,cserve);
-                        server->addEvent(currCustomer,custEvent);
-                    }
+                    ///!-- Add Event Data in Customer
+                    CEvent custEvent(clock,cexit);
+                    Interruptions.front().
+                    second->addEvent(currCustomer,custEvent);
+                }
+                Interruptions.pop();
+            }
+    }
+
+    ///3.Fetch Customers into Empty Servers
+    void fetchToServers()
+    {
+        Server* server;
+        if(!waitingQueue.empty()&& !Servers.empty())
+        {
+            list<Server*>::iterator srvit;
+            for(srvit=Servers.begin(); srvit!=Servers.end(); srvit++)
+            {
+                server = *srvit;
+                if(!server->getWorking())
+                {
+                    server->setCurrCustomer(waitingQueue.front());
+                    waitingQueue.pop();
+                    server->setWorking(true);
+
+                    ///!-- Add Event Data in Customer
+                    CEvent custEvent(clock,cserve);
+                    server->addEvent(server->getCurrCustomer(),custEvent);
                 }
             }
-            //clock++
+        }
+    }
+
+    ///Remaining Time-- and Remove Finished Clients  & Clock++
+    void advance()
+    {
+        //clock++
+        list<Server*>::iterator itt;
+        for(itt=Servers.begin(); itt!=Servers.end(); itt++)
+        {
+            Server*server = *itt;
+            if(server->getWorking())
+            {
+                server->getCurrCustomer()->decrementRT();
+                if (server->getCurrCustomer()->getRemainingTime()==0)
+                {
+                    server->setWorking(false);
+                    CEvent custEvent(clock,cexit);
+                    server->addEvent(server->getCurrCustomer(),custEvent);
+                }
+
+            }
+        }
+        clock++;
+    }
+
+
+public:
+    System(list<Customer*>inpt, list<Server*> servers, list<pair<int,Server*>> intr, int serversNum,int custNum)
+    {
+        serversNo = serversNum;
+        custNo = custNum;
+        clock = 0;
+        Servers= servers;
+
+        GenerateSortedInputQ(inpt);
+        //GenerateServers();
+        GenerateSortedIntrptQ(intr);
+
+    }
+    /*
+            System(list<pair<int,Server*>> intrr)///3amalt constructor tany 3shan agrb 3leh el interruptions bs
+            {
+
+            GenerateSortedIntrptQ(intrr);
+
+            }*/
+
+    bool serversState(){
+        list<Server*>::iterator it;
+        Server*S;
+        for(it=Servers.begin();it!=Servers.end();it++)
+        {
+            S = *it;
+            if(S->getWorking() == true){
+                return true;
+            }
+        }
+    }
+
+    void Start()
+    {
+        while((!input.empty() && !waitingQueue.empty() )|| serversState() )
+        {
+            fetchArriving();
+            checkIntrpt();
+            fetchToServers();
+            advance();
         }
     }
     //void enterWaitingQueue()

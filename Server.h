@@ -29,10 +29,10 @@ public:
         working = false;
         ServerID = id;
     }
-   setWorking(bool state){
+    void setWorking(bool state){
        working=state;
-   }
-    getWorking()
+    }
+    bool getWorking()
     {
         return working;
     }
