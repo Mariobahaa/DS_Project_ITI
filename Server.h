@@ -17,16 +17,24 @@ class Server
     //list<SEvent> customerHistory;
     int ServerID;
     Customer * CurrCustomer ; // Currently Served Customer in this Server
-    public:
-        map<Customer*, list<CEvent>> custHistory;
-        Server(){
-            working = false;
-        }
-        Server(int id){
-            working = false;
-            ServerID = id;
-        }
-
+public:
+    map<Customer*, list<CEvent>> custHistory;
+    Server()
+    {
+        working = false;
+    }
+    Server(int id)
+    {
+        working = false;
+        ServerID = id;
+    }
+   setWorking(bool state){
+       working=state;
+   }
+    getWorking()
+    {
+        return working;
+    }
 };
 
 #endif // SERVER_H
