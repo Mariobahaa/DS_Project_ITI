@@ -3,8 +3,6 @@
 #include <iostream>
 #include <queue>
 #include <list>
-#include <algorithm>
-#include <iterator>
 #include "Customer.h"
 #include "Server.h"
 
@@ -54,6 +52,7 @@ class System
         for(it=inpt.begin(); it != inpt.end(); ++it)
         {
             input.push(*it);
+            cout << (*it)->getCustId() << endl;
         }
     }
 
@@ -163,7 +162,7 @@ class System
                 if (server->getCurrCustomer()->getRemainingTime()==0)
                 {
                     server->setWorking(false);
-                    cout << "Exiting" << endl;
+                    cout << "C" << server->getCurrCustomer()->getCustId() <<"Exiting" << endl;
                     CEvent custEvent(clock,cexit);
                     server->addEvent(server->getCurrCustomer(),custEvent);
                 }
@@ -226,6 +225,15 @@ public:
 ///3.Fetch Customers into Empty Servers
 ///!-- Save Customer Data in Servers
 ///Remaining Time-- and Remove Finished Clients  & Clock++
+
+
+
+///Departure
+/*
+customer--arrival time--server number--spent time interruption time
+--comeback time -- comeback server-- spent time--total spent time or departure
+
+*/
 
 /*
 void insertionSort()

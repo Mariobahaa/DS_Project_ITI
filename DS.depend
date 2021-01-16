@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1610826236 source:e:\cdb\ds\main.cpp
+1610830617 source:e:\cdb\ds\main.cpp
 	<iostream>
 	<queue>
 	<list>
@@ -18,12 +18,10 @@
 
 1610653299 source:e:\cdb\ds\system.cpp
 
-1610829707 e:\cdb\ds\system.h
+1610831195 e:\cdb\ds\system.h
 	<iostream>
 	<queue>
 	<list>
-	<algorithm>
-	<iterator>
 	"Customer.h"
 	"Server.h"
 
