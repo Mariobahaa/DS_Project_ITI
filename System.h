@@ -131,7 +131,7 @@ class System
 
                     ///!-- Add Event Data in Customer
                     CEvent custEvent(clock,cserve);
-                    server->addEvent(currCustomer,custEvent);
+                    server->addEvent(server->getCurrCustomer(),custEvent);
                 }
             }
         }
@@ -144,7 +144,7 @@ class System
         list<Server*>::iterator itt;
         for(itt=Servers.begin(); itt!=Servers.end(); itt++)
         {
-            server = *itt;
+            Server*server = *itt;
             if(server->getWorking())
             {
                 server->getCurrCustomer()->decrementRT();

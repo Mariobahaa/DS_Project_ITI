@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
     Customer* c1 = NULL;
-    Customer* c2 = new Customer(0,0);
+    Customer* c2 = new Customer(0,0,1);
     c1 = c2;
     cout << c1->getArrival();
 

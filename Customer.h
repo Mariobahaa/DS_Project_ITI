@@ -18,17 +18,15 @@ using namespace std;
 class Customer
 {
     ///list<int> Interruptions; -----> Global
-    int Departure, ServiceTime,Arrival,RemainingTime;
+    int Departure, ServiceTime,Arrival,RemainingTime, CustId;
     //list<CEvent> CustEvents;
     public:
 
-    getArrival(){
-        return Arrival;
-    }
     //Customer(list<int>Intr, int arrival, int departure, int st){
-    Customer(int arrival, int st){
+    Customer(int arrival, int st, int id){
 
         //Interruptions = Intr;
+        CustId = id;
         Arrival = arrival;
         ServiceTime= st;
         RemainingTime = st;
@@ -36,9 +34,29 @@ class Customer
 
     }
 
-    public:
-    Customer(){cout<<"hello";}
+    Customer(){;}
     ///Report()
+
+    int getArrival(){
+        return Arrival;
+    }
+
+    int getCustId(){
+        return CustId;
+    }
+
+    int getRemainingTime()
+    {
+        return RemainingTime;
+    }
+
+    void decrementRT()
+    {
+        RemainingTime--;
+    }
+
+
+
 
 };
 
