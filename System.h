@@ -3,13 +3,20 @@
 #include <iostream>
 #include <queue>
 #include <list>
-
+#include <algorithm>
+#include <iterator>
 #include "Customer.h"
 #include "Server.h"
 
 #endif // SYSTEM
 
 using namespace std;
+
+///for testing the interruption list
+       int Print(const pair<int, Server*>  &intr)
+{
+    cout <<"\ninterruption at: "<< intr.first;
+}
 
 class System
 {
@@ -36,6 +43,14 @@ class System
 
     }
 
+        System(list<pair<int,Server*>> intrr)///3amalt constructor tany 3shan agrb 3leh el interruptions bs
+        {
+
+        GenerateSortedIntrptQ(intrr);
+
+        }
+
+
     void GenerateServers(){
         for(int i=0;i<serversNo;i++)
         {
@@ -55,7 +70,6 @@ class System
         {
             input.push(*it);
         }
-
     }
 
     void GenerateSortedIntrptQ(list<pair<int,Server*>> intr)
@@ -64,13 +78,19 @@ class System
         return a.first < b.first;
         });
 
+       list<pair<int, Server*> >::iterator it2;
+       for_each(intr.begin(), intr.end(), Print);///USES ALGORITHM LIBRARY
+
 
         list<pair<int,Server*>>::iterator it;
         for(it=intr.begin(); it != intr.end(); ++it)
         {
             Interruptions.push(*it);
         }
+
     }
+
+
 
     void Start(){
 
@@ -83,6 +103,14 @@ class System
                 input.pop();
             }
             ///2.Check for Interruptions and Execute Interruption Handling
+//              list<pair<int,Server*>>::iterator it3;
+           while(Interruptions.front().first==clock&&Interruptions.front().second->getWorking()==true&&!Interruptions.empty())
+            { ///STILL INCOMPLETE
+                waitingQueue.push(Interruptions.front().second->custHistory.begin()->first);
+                Interruptions.front().second->setWorking(false);
+                  CEvent ce(clock,cexit);
+//
+            }
             ///!-- Add Event Data in Customer
 
             //clock++
