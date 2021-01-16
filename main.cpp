@@ -16,13 +16,13 @@ int main()
     cout << c1->getArrival();
 
     Server S1;
-    custEvent cste=cserve;
+   /* custEvent cste=cserve;
     cout << "Hey" << endl << endl;
     CEvent ce(1,cste);
     S1.custHistory[c1].push_back(ce);
     list<CEvent>::iterator it;
     for(it = S1.custHistory[c1].begin();it!=S1.custHistory[c1].end();++it)
-        cout<< it->getEventTime();
+        cout<< it->getEventTime();*/
 
    pair <int, Server*> intr1  (6,&S1);
    pair <int, Server*> intr2  (4,&S1);
@@ -32,7 +32,7 @@ int main()
     intr.push_back(intr1);
     intr.push_back(intr2);
     intr.push_back(intr3);
-    System interr(intr);
+    //System interr(intr);
 
 
 

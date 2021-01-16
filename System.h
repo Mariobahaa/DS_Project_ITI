@@ -13,10 +13,15 @@
 using namespace std;
 
 ///for testing the interruption list
-       int Print(const pair<int, Server*>  &intr)
+int Print(const pair<int, Server*>  &intr)
 {
     cout <<"\ninterruption at: "<< intr.first;
 }
+
+
+
+
+
 
 class System
 {
@@ -29,30 +34,30 @@ class System
     int custNo;
     int clock;
 
-    public:
-    System(list<Customer*>inpt, list<pair<int,Server*>> intr, int serversNum,int custNum){
+public:
+    System(list<Customer*>inpt, list<pair<int,Server*>> intr, int serversNum,int custNum)
+    {
         serversNo = serversNum;
         custNo = custNum;
         clock = 0;
-
-
 
         GenerateSortedInputQ(inpt);
         GenerateServers();
         GenerateSortedIntrptQ(intr);
 
     }
+    /*
+            System(list<pair<int,Server*>> intrr)///3amalt constructor tany 3shan agrb 3leh el interruptions bs
+            {
 
-        System(list<pair<int,Server*>> intrr)///3amalt constructor tany 3shan agrb 3leh el interruptions bs
-        {
+            GenerateSortedIntrptQ(intrr);
 
-        GenerateSortedIntrptQ(intrr);
-
-        }
+            }*/
 
 
-    void GenerateServers(){
-        for(int i=0;i<serversNo;i++)
+    void GenerateServers()
+    {
+        for(int i=0; i<serversNo; i++)
         {
             Servers.push_back(new Server(i+1));
         }
@@ -60,8 +65,9 @@ class System
 
     void GenerateSortedInputQ(list<Customer*> inpt)
     {
-        inpt.sort( [](Customer* a, Customer* b) {
-        return a->getArrival() < b->getArrival();
+        inpt.sort( [](Customer* a, Customer* b)
+        {
+            return a->getArrival() < b->getArrival();
         });
 
 
@@ -74,12 +80,14 @@ class System
 
     void GenerateSortedIntrptQ(list<pair<int,Server*>> intr)
     {
-        intr.sort( [](pair<int,Server*> a, pair<int,Server*>  b) {
-        return a.first < b.first;
+        intr.sort( [](pair<int,Server*> a, pair<int,Server*>  b)
+        {
+            return a.first < b.first;
         });
 
-       list<pair<int, Server*> >::iterator it2;
-       for_each(intr.begin(), intr.end(), Print);///USES ALGORITHM LIBRARY
+
+        list<pair<int, Server*> >::iterator it2;
+        for_each(intr.begin(), intr.end(), Print);///USES ALGORITHM LIBRARY
 
 
         list<pair<int,Server*>>::iterator it;
@@ -92,9 +100,11 @@ class System
 
 
 
-    void Start(){
+    void Start()
+    {
 
-        while(!input.empty() ){
+        while(!input.empty() )
+        {
             ///1.Fetch All Arriving Customers from Input into Waiting Queue
 
             while(input.front()->getArrival()==clock && !input.empty())
@@ -103,28 +113,58 @@ class System
                 input.pop();
             }
             ///2.Check for Interruptions and Execute Interruption Handling
-//              list<pair<int,Server*>>::iterator it3;
-           while(Interruptions.front().first==clock&&Interruptions.front().second->getWorking()==true&&!Interruptions.empty())
-            { ///STILL INCOMPLETE
-                waitingQueue.push(Interruptions.front().second->custHistory.begin()->first);
-                Interruptions.front().second->setWorking(false);
-                  CEvent ce(clock,cexit);
 //
-            }
-            ///!-- Add Event Data in Customer
 
+
+            Customer * currCustomer;
+            if(!Interruptions.empty())
+                while(!Interruptions.empty()&&Interruptions.front().first==clock)
+                {
+                    if(Interruptions.front().second->getWorking()==true)
+                    {
+                        currCustomer = Interruptions.front().second->getCurrCustomer();
+                        waitingQueue.push(currCustomer);
+                        Interruptions.front().second->setWorking(false);
+
+                        ///!-- Add Event Data in Customer
+                        CEvent custEvent(clock,cexit);
+                        Interruptions.front().
+                        second->addEvent(currCustomer,custEvent);
+                    }
+                    Interruptions.pop();
+                }
+            ///3.Fetch Customers into Empty Servers
+            Server* server;
+            if(!waitingQueue.empty()&& !Servers.empty())
+            {
+                list<Server*>::iterator srvit;
+                for(srvit=Servers.begin(); srvit!=Servers.end(); srvit++)
+                {
+                    server = *srvit;
+                    if(!server->getWorking())
+                    {
+                        server->setCurrCustomer(waitingQueue.front());
+                        waitingQueue.pop();
+                        server->setWorking(true);
+
+                        ///!-- Add Event Data in Customer
+                        CEvent custEvent(clock,cserve);
+                        server->addEvent(currCustomer,custEvent);
+                    }
+                }
+            }
             //clock++
         }
     }
     //void enterWaitingQueue()
 };
 
-                ///1.Fetch Arriving Customers from Input into Waiting Queue
-                ///2.Check for Interruptions and Execute Interruption Handling
-                ///!-- Add Event Data in Customer
-                ///3.Fetch Customers into Empty Servers
-                ///!-- Save Customer Data in Servers
-                ///
+///1.Fetch Arriving Customers from Input into Waiting Queue
+///2.Check for Interruptions and Execute Interruption Handling
+///!-- Add Event Data in Customer
+///3.Fetch Customers into Empty Servers
+///!-- Save Customer Data in Servers
+///Remaining Time-- and Remove Finished Clients  & Clock++
 
 /*
 void insertionSort()
@@ -139,6 +179,17 @@ void insertionSort()
         }
 head=selected;
     }
+*/
+
+/*
+              list<pair<int,Server*>>::iterator it3;
+            while(Interruptions.front().first==clock&&Interruptions.front().second->getWorking()==true&&!Interruptions.empty())
+            { ///STILL INCOMPLETE
+                waitingQueue.push(Interruptions.front().second->custHistory.begin()->first);
+                Interruptions.front().second->setWorking(false);
+                  CEvent ce(clock,cexit);
+//
+            }
 */
 
 //Interruptions Per Server
