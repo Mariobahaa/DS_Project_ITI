@@ -68,7 +68,7 @@ class System
 
         /*list<pair<int, Server*> >::iterator it2;
         for_each(intr.begin(), intr.end(), Print);///USES ALGORITHM LIBRARY
-    */
+        */
 
         list<pair<int,Server*>>::iterator it;
         for(it=intr.begin(); it != intr.end(); ++it)
@@ -82,10 +82,17 @@ class System
     ///1.Fetch All Arriving Customers from Input into Waiting Queue
     void fetchArriving()
     {
-        while(input.front()->getArrival()==clock && !input.empty())
+        bool exit = false;
+        while(!input.empty() && !exit)
         {
-            waitingQueue.push(input.front());
-            input.pop();
+            if(input.front()->getArrival()==clock)
+            {
+                waitingQueue.push(input.front());
+                input.pop();
+            }
+            else {
+                exit = true;
+            }
         }
     }
 
@@ -182,10 +189,21 @@ public:
 
             }*/
 
+    bool serversState(){
+        list<Server*>::iterator it;
+        Server*S;
+        for(it=Servers.begin();it!=Servers.end();it++)
+        {
+            S = *it;
+            if(S->getWorking() == true){
+                return true;
+            }
+        }
+    }
 
     void Start()
     {
-        while(!input.empty() )
+        while((!input.empty() && !waitingQueue.empty() )|| serversState() )
         {
             fetchArriving();
             checkIntrpt();

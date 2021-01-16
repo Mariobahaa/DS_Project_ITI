@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1610819890 source:e:\cdb\ds\main.cpp
+1610824015 source:e:\cdb\ds\main.cpp
 	<iostream>
 	<queue>
 	<list>
@@ -18,7 +18,7 @@
 
 1610653299 source:e:\cdb\ds\system.cpp
 
-1610819675 e:\cdb\ds\system.h
+1610825998 e:\cdb\ds\system.h
 	<iostream>
 	<queue>
 	<list>

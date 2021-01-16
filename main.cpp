@@ -37,7 +37,12 @@ int main()
         servers.push_back(new Server(i+1));
     }
 
-    cout << endl << endl;
+    /*cout<< servers.size() << endl;
+    list<Server*>:: iterator st;
+    st = servers.begin();
+    Server* S = *st;
+    cout << S->getWorking();
+    cout << endl << endl;*/
 
     list<pair<int,Server*>> interruptions;
     int interNum;
