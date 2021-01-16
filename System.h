@@ -88,6 +88,7 @@ class System
             if(input.front()->getArrival()==clock)
             {
                 waitingQueue.push(input.front());
+                cout << input.front()->getCustId() << "C entering Queue" << endl;
                 input.pop();
             }
             else {
@@ -117,6 +118,7 @@ class System
                     second->addEvent(currCustomer,custEvent);
                 }
                 Interruptions.pop();
+                cout << "Popped Interruption" << endl;
             }
     }
 
@@ -124,7 +126,7 @@ class System
     void fetchToServers()
     {
         Server* server;
-        if(!waitingQueue.empty()&& !Servers.empty())
+        if(!waitingQueue.empty()&& !Servers.empty()) //skips
         {
             list<Server*>::iterator srvit;
             for(srvit=Servers.begin(); srvit!=Servers.end(); srvit++)
@@ -133,8 +135,11 @@ class System
                 if(!server->getWorking())
                 {
                     server->setCurrCustomer(waitingQueue.front());
+                    cout << "Serving C" << waitingQueue.front()->getCustId() <<
+                    " in Server " << server->ServerID<<endl;
                     waitingQueue.pop();
                     server->setWorking(true);
+
 
                     ///!-- Add Event Data in Customer
                     CEvent custEvent(clock,cserve);
@@ -158,6 +163,7 @@ class System
                 if (server->getCurrCustomer()->getRemainingTime()==0)
                 {
                     server->setWorking(false);
+                    cout << "Exiting" << endl;
                     CEvent custEvent(clock,cexit);
                     server->addEvent(server->getCurrCustomer(),custEvent);
                 }
@@ -203,7 +209,7 @@ public:
 
     void Start()
     {
-        while((!input.empty() && !waitingQueue.empty() )|| serversState() )
+        while(!input.empty() || !waitingQueue.empty() || serversState() )
         {
             fetchArriving();
             checkIntrpt();
