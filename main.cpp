@@ -27,8 +27,8 @@ int main()
         cout << "Enter Customer " << i+1 << " 's Service Time"<<endl;
         cin >> serviceTime;
 
-        Customer C(arrival,serviceTime,i+1);
-        customers.push_back(&C);
+        //Customer C(arrival,serviceTime,i+1);
+        customers.push_back(new Customer(arrival,serviceTime,i+1));
     }
 
     list<Server*> servers;

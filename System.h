@@ -3,8 +3,6 @@
 #include <iostream>
 #include <queue>
 #include <list>
-#include <algorithm>
-#include <iterator>
 #include "Customer.h"
 #include "Server.h"
 
@@ -54,6 +52,7 @@ class System
         for(it=inpt.begin(); it != inpt.end(); ++it)
         {
             input.push(*it);
+            cout << (*it)->getCustId() << endl;
         }
     }
 

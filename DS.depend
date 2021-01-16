@@ -18,12 +18,10 @@
 
 1610653299 source:e:\cdb\ds\system.cpp
 
-1610829707 e:\cdb\ds\system.h
+1610830499 e:\cdb\ds\system.h
 	<iostream>
 	<queue>
 	<list>
-	<algorithm>
-	<iterator>
 	"Customer.h"
 	"Server.h"
 
