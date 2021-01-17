@@ -17,7 +17,7 @@ class Server
     //list<SEvent> customerHistory;
 
     Customer * CurrCustomer ; // Currently Served Customer in this Server
-    map<Customer*, list<CEvent>> custHistory;
+  public:  map<Customer*, list<CEvent>> custHistory;
 public:
     int ServerID;
     Server()

@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 
-    cout << "\t\t\tWelcome!"<<endl << endl;
+    cout << "\n\t\t\t\t\t\t     Welcome!"<<endl << endl;
     int CustomerNum, ServersNum;
     cout << "Enter Number of Customers" <<endl;
     cin >> CustomerNum;

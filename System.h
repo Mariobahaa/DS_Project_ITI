@@ -3,6 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <list>
+#include <vector>
 #include "Customer.h"
 #include "Server.h"
 
@@ -90,7 +91,8 @@ class System
                 cout << input.front()->getCustId() << "C entering Queue" << endl;
                 input.pop();
             }
-            else {
+            else
+            {
                 exit = true;
             }
         }
@@ -112,7 +114,7 @@ class System
                     Interruptions.front().second->setWorking(false);
 
                     ///!-- Add Event Data in Customer
-                    CEvent custEvent(clock,cexit);
+                    CEvent custEvent(clock,cintr);
                     Interruptions.front().
                     second->addEvent(currCustomer,custEvent);
                 }
@@ -135,7 +137,7 @@ class System
                 {
                     server->setCurrCustomer(waitingQueue.front());
                     cout << "Serving C" << waitingQueue.front()->getCustId() <<
-                    " in Server " << server->ServerID<<endl;
+                         " in Server " << server->ServerID<<endl;
                     waitingQueue.pop();
                     server->setWorking(true);
 
@@ -163,7 +165,8 @@ class System
                 {
                     server->setWorking(false);
                     cout << "C" << server->getCurrCustomer()->getCustId() <<"Exiting" << endl;
-                    CEvent custEvent(clock,cexit);
+                    CEvent custEvent(clock+1,cexit);
+                    server->getCurrCustomer()->setDeparture(clock+1);
                     server->addEvent(server->getCurrCustomer(),custEvent);
                 }
 
@@ -194,17 +197,55 @@ public:
 
             }*/
 
-    bool serversState(){
+    bool serversState()
+    {
         list<Server*>::iterator it;
         Server*S;
-        for(it=Servers.begin();it!=Servers.end();it++)
+        for(it=Servers.begin(); it!=Servers.end(); it++)
         {
             S = *it;
-            if(S->getWorking() == true){
+            if(S->getWorking() == true)
+            {
                 return true;
             }
         }
     }
+
+            void Report()
+            {
+                map<Customer*, list<CEvent>> ::iterator itr;
+                list<CEvent>::iterator it;
+                for (itr = Servers.front()->custHistory.begin(); itr != Servers.front()->custHistory.end(); ++itr)
+                {
+                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\n";
+                    cout << "\t\t\t\t   C" << itr->first->getCustId();
+                    cout<<"\t\t    "<<itr->first->getArrival();
+                    cout<<"\t\t    "<<itr->first->getTimeSpent();
+                    cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\n\n";
+                    for(it=itr->second.begin(); it != itr->second.end(); ++it)
+                    {
+                        int serveStart;
+
+                        if(it->getEventType()==0)
+                        {
+                            serveStart=it->getEventTime();
+                            cout   << "\t\t\t\t" <<"ServeStarted"<<"\t    " <<serveStart<<endl;
+                        }
+                        else if(it->getEventType()==1)
+                        {
+                            cout   << "\t\t\t\t" <<"Interruption"<<"\t    " << it->getEventTime();
+                            cout<<"\t\t    "  << it->getEventTime()-serveStart<<endl;
+                        }
+                        else if(it->getEventType()==2)
+                        {
+                            cout   << "\t\t\t\t" <<"Exited"<<"\t\t    "  << it->getEventTime();
+                            cout<<"\t\t    "  << it->getEventTime()-serveStart;
+                        }
+                    }
+                    cout<<"\n\n\n\n";
+                }
+
+            }
 
     void Start()
     {
@@ -214,6 +255,10 @@ public:
             checkIntrpt();
             fetchToServers();
             advance();
+            system("CLS");
+            Report();
+
+
         }
     }
     //void enterWaitingQueue()
@@ -229,9 +274,11 @@ public:
 
 
 ///Departure
-/*
-customer--arrival time--server number--spent time interruption time
---comeback time -- comeback server-- spent time--total spent time or departure
+//done:
+//customer--arrival time--interruption time----spent time--comeback time---- spent time--total spent time -- departure
+/*not yet:
+server number
+ -- comeback server
 
 */
 

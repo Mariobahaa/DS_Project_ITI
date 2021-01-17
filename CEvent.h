@@ -3,7 +3,7 @@
 //#include "Server.h"
 
 enum custEvent{
-  cserve , cexit
+  cserve ,cintr, cexit
 };
 ///Typeof Event, Server of Event, Time of Event
 /*
@@ -15,6 +15,7 @@ class CEvent
 {
     custEvent CEventType;
     int CEventTime;
+    int serviceDuration;
     //Server* CServer;
     public:
 
@@ -35,6 +36,9 @@ class CEvent
         int getEventTime(){
             return CEventTime;
         }
-
+int getServiceDuration()
+{
+    ;
+}
 };
 #endif // CEVENT_H
