@@ -1,50 +1,50 @@
 #ifndef CEVENT_H
 #define CEVENT_H
-//#include "Server.h"
 
-enum custEvent{
-  cserve ,cintr, cexit
+enum custEvent
+{
+    cserve,cintr, cexit
 };
 ///Typeof Event, Server of Event, Time of Event
-/*
-cserve, ServerS1, time1
-cexit , ServerS1, time2 // interruption
-cserve, ServerS1, time1 */
-
 class CEvent
 {
     custEvent CEventType;
     int CEventTime;
     int serviceDuration;
     int EServId;
-    //Server* CServer;
-    public:
 
-        CEvent(){
-        }
+public:
 
-        //CEvent(int tm, custEvent evnt,Server* srv){
-        CEvent(int tm, custEvent evnt,int sid){
-            CEventTime = tm;
-            CEventType = evnt;
-            EServId = sid;
-            //CServer = srv;
-        };
+    CEvent()
+    {
+    }
 
-        custEvent getEventType(){
-            return CEventType;
-        }
 
-        int getEventTime(){
-            return CEventTime;
-        }
+    CEvent(int tm, custEvent evnt,int sid)
+    {
+        CEventTime = tm;
+        CEventType = evnt;
+        EServId = sid;
 
-        int getEServId(){
-            return EServId;
-        }
-        int getServiceDuration()
-        {
-            return serviceDuration;
-        }
+    };
+
+    custEvent getEventType()
+    {
+        return CEventType;
+    }
+
+    int getEventTime()
+    {
+        return CEventTime;
+    }
+
+    int getEServId()
+    {
+        return EServId;
+    }
+    int getServiceDuration()
+    {
+        return serviceDuration;
+    }
 };
 #endif // CEVENT_H

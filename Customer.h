@@ -9,25 +9,18 @@
 
 using namespace std;
 
-///Customer Events
-///entry: enter waiting queue
-///interrupted: interrupted at service
-///exit:
-
-
 class Customer
 {
-    ///list<int> Interruptions; -----> Global
+
     int Departure, ServiceTime,Arrival,RemainingTime, CustId,TimeSpent;
 
     list<CEvent> custHistory;
-    //list<CEvent> CustEvents;
-    public:
 
-    //Customer(list<int>Intr, int arrival, int departure, int st){
-    Customer(int arrival, int st, int id){
+public:
 
-        //Interruptions = Intr;
+    Customer(int arrival, int st, int id)
+    {
+
         CustId = id;
         Arrival = arrival;
         ServiceTime= st;
@@ -36,14 +29,15 @@ class Customer
 
     }
 
-    Customer(){;}
-    ///Report()
+    Customer() {;}
 
-    int getArrival(){
+    int getArrival()
+    {
         return Arrival;
     }
 
-    int getCustId(){
+    int getCustId()
+    {
         return CustId;
     }
 
@@ -61,16 +55,18 @@ class Customer
     {
         Departure=Dep;
     }
- int getTimeSpent()
+    int getTimeSpent()
     {
         return Departure-Arrival;
     }
 
-    void addEvent(CEvent ce){
+    void addEvent(CEvent ce)
+    {
         custHistory.push_back(ce);
     }
 
-    int getServiceTime(){
+    int getServiceTime()
+    {
         return ServiceTime;
     }
 
