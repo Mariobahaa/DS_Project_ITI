@@ -219,32 +219,37 @@ public:
                    system("CLS");
                 list<Customer*>::iterator itr;
                 list<CEvent>::iterator it;
+               Customer* customers=*itr;
                 for (itr = customersCpy.begin(); itr != customersCpy.end(); ++itr)
                 {
                     cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\n";
-                    cout << "\t\t\t\t   C" << itr->getCustId();
-                    cout<<"\t\t    "<<itr->getArrival();
-                    cout<<"\t\t    "<<itr->getTimeSpent();
+                    cout << "\t\t\t\t   C" << customers->getCustId();
+                    cout<<"\t\t    "<<customers->getArrival();
+                    cout<<"\t\t    "<<customers->getTimeSpent();
                     cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\t\tServer\n\n";
-                    for(it=itr->second.begin(); it != itr->second.end(); ++it)
+                    for(it=customers->getcustHistory().begin(); it != customers->getcustHistory().end(); ++it)
                     {
                         int serveStart;
 
                         if(it->getEventType()==0)
                         {
                             serveStart=it->getEventTime();
-                            cout   << "\t\t\t\t" <<"ServeStarted"<<"\t    " <<serveStart<<endl;
+                            cout   << "\t\t\t\t" <<"ServeStarted"<<"\t    " <<serveStart;
+                           cout<<"\t\t    "  << it->getEServId()<< endl;
+
                         }
                         else if(it->getEventType()==1)
                         {
                             cout   << "\t\t\t\t" <<"Interruption"<<"\t    " << it->getEventTime();
                             cout<<"\t\t    "  << it->getEventTime()-serveStart;
-                            //cout<<"\t]t    "  << itr->ServerId<< endl;
+                            cout<<"\t\t    "  << it->getEServId()<< endl;
                         }
                         else if(it->getEventType()==2)
                         {
                             cout   << "\t\t\t\t" <<"Exited"<<"\t\t    "  << it->getEventTime();
                             cout<<"\t\t    "  << it->getEventTime()-serveStart;
+                         cout<<"\t\t    "  << it->getEServId()<< endl;
+
                         }
 
                     }
