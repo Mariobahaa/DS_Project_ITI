@@ -204,6 +204,8 @@ public:
     void Report()
             {
                 system("CLS");
+                if(serversNo<=0 || custNo <= 0){cout<< "Unable to start the system" << endl; return;}
+                cout<< "\t\t\t\t\System Report"<< endl << endl <<endl;
                 list<Customer*>::iterator itr;
                 list<CEvent>::iterator it;
                 Customer* cstmr;
@@ -253,6 +255,7 @@ public:
 
     void Start()
     {
+        if(serversNo<=0 || custNo <= 0){cout<< "System Unable to Operate" << endl; return;}
         while(!input.empty() || !waitingQueue.empty() || serversState() )
         {
             fetchArriving();
