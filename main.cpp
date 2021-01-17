@@ -28,6 +28,7 @@ int main()
         cin >> serviceTime;
 
         //Customer C(arrival,serviceTime,i+1);
+        if(arrival>=0 && serviceTime>=1)
         customers.push_back(new Customer(arrival,serviceTime,i+1));
     }
 
@@ -58,6 +59,7 @@ int main()
             cout << "Enter Time of Interruption " << i+1 << endl;
             cin >> time;
             pair <int, Server*> p(time,*it);
+            if(time>=0)
             interruptions.push_back(p);
         }
         if(it!=servers.end())
