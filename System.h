@@ -213,7 +213,7 @@ public:
                 {
                     cstmr=*itr;
                     //cout<<"New Customer" << endl;
-                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\t   WaitingTime\n";
+                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\t  TotalWaitingTime\n";
                     cout << "\t\t\t\t   C" << cstmr->getCustId();
                     cout<<"\t\t    "<<cstmr->getArrival();
                     cout<<"\t\t    "<<cstmr->getTimeSpent();
