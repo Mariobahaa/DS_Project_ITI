@@ -3,6 +3,7 @@
 #include <iostream>
 #include <queue>
 #include <list>
+#include <vector>
 #include "Customer.h"
 #include "Server.h"
 
@@ -10,23 +11,13 @@
 
 using namespace std;
 
-///for testing the interruption list
-int Print(const pair<int, Server*>  &intr)
-{
-    cout <<"\ninterruption at: "<< intr.first;
-}
-
-
-
-
-
-
 class System
 {
     queue<Customer*> input;
     queue<Customer*> waitingQueue;
     queue<pair<int,Server*>> Interruptions; //time,Interrupted Server
     list<Server*> Servers;
+    list<Customer*>customersCpy;
 
     int serversNo;
     int custNo;
@@ -47,6 +38,7 @@ class System
             return a->getArrival() < b->getArrival();
         });
 
+        customersCpy = inpt;
 
         list<Customer*>::iterator it;
         for(it=inpt.begin(); it != inpt.end(); ++it)
@@ -63,7 +55,6 @@ class System
         {
             return a.first < b.first;
         });
-
 
         /*list<pair<int, Server*> >::iterator it2;
         for_each(intr.begin(), intr.end(), Print);///USES ALGORITHM LIBRARY
@@ -90,7 +81,8 @@ class System
                 cout << input.front()->getCustId() << "C entering Queue" << endl;
                 input.pop();
             }
-            else {
+            else
+            {
                 exit = true;
             }
         }
@@ -112,9 +104,8 @@ class System
                     Interruptions.front().second->setWorking(false);
 
                     ///!-- Add Event Data in Customer
-                    CEvent custEvent(clock,cexit);
-                    Interruptions.front().
-                    second->addEvent(currCustomer,custEvent);
+                    CEvent custEvent(clock,cintr,Interruptions.front().second->getServerID());
+                    currCustomer->addEvent(custEvent);
                 }
                 Interruptions.pop();
                 cout << "Popped Interruption" << endl;
@@ -128,21 +119,22 @@ class System
         if(!waitingQueue.empty()&& !Servers.empty()) //skips
         {
             list<Server*>::iterator srvit;
-            for(srvit=Servers.begin(); srvit!=Servers.end(); srvit++)
+            for(srvit=Servers.begin(); srvit!=Servers.end(); ++srvit)
             {
                 server = *srvit;
-                if(!server->getWorking())
+                if(!server->getWorking() && !waitingQueue.empty()) //<<<<
                 {
                     server->setCurrCustomer(waitingQueue.front());
-                    cout << "Serving C" << waitingQueue.front()->getCustId() <<
-                    " in Server " << server->ServerID<<endl;
+//                    cout << "Serving C" << waitingQueue.front()->getCustId() <<
+//                         " in Server " << server->ServerID<<endl;
                     waitingQueue.pop();
                     server->setWorking(true);
 
 
                     ///!-- Add Event Data in Customer
-                    CEvent custEvent(clock,cserve);
-                    server->addEvent(server->getCurrCustomer(),custEvent);
+                    CEvent custEvent(clock,cserve,server->getServerID());
+                   server->getCurrCustomer()->addEvent(custEvent);
+
                 }
             }
         }
@@ -163,8 +155,11 @@ class System
                 {
                     server->setWorking(false);
                     cout << "C" << server->getCurrCustomer()->getCustId() <<"Exiting" << endl;
-                    CEvent custEvent(clock,cexit);
-                    server->addEvent(server->getCurrCustomer(),custEvent);
+                    CEvent custEvent(clock+1,cexit,server->getServerID());
+                    server->getCurrCustomer()->setDeparture(clock+1);
+                    server->getCurrCustomer()->addEvent(custEvent);
+
+
                 }
 
             }
@@ -180,7 +175,7 @@ public:
         custNo = custNum;
         clock = 0;
         Servers= servers;
-
+        customersCpy=inpt;
         GenerateSortedInputQ(inpt);
         //GenerateServers();
         GenerateSortedIntrptQ(intr);
@@ -189,22 +184,72 @@ public:
     /*
             System(list<pair<int,Server*>> intrr)///3amalt constructor tany 3shan agrb 3leh el interruptions bs
             {
-
             GenerateSortedIntrptQ(intrr);
-
             }*/
 
-    bool serversState(){
+    bool serversState()
+    {
         list<Server*>::iterator it;
         Server*S;
-        for(it=Servers.begin();it!=Servers.end();it++)
+        for(it=Servers.begin(); it!=Servers.end(); it++)
         {
             S = *it;
-            if(S->getWorking() == true){
+            if(S->getWorking() == true)
+            {
                 return true;
             }
         }
     }
+
+    void Report()
+            {
+                system("CLS");
+                list<Customer*>::iterator itr;
+                list<CEvent>::iterator it;
+                Customer* cstmr;
+                for (itr = customersCpy.begin(); itr != customersCpy.end(); ++itr)
+                {
+                    cstmr=*itr;
+                    //cout<<"New Customer" << endl;
+                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\n";
+                    cout << "\t\t\t\t   C" << cstmr->getCustId();
+                    cout<<"\t\t    "<<cstmr->getArrival();
+                    cout<<"\t\t    "<<cstmr->getTimeSpent();
+                    cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\t\tServer\n\n";
+                    list<CEvent> cHistory = cstmr->getcustHistory();
+                    for(it= cHistory.begin(); it != cHistory.end(); ++it)
+                    {
+                        /*int serveStart;
+                        serveStart=it->getEventTime();*/
+
+                        //cout << "New Event" << endl;
+                        if(it->getEventType()==cserve)
+                        {
+                            cout   << "\t\t\t\t" <<"ServeStarted"<<"\t    " <<it->getEventTime();
+                            cout<<"\t\t    "  << "X";
+                           cout<<"\t\t\t    "  << it->getEServId()<< endl;
+
+                        }
+                        else if(it->getEventType()==cintr)
+                        {
+                            cout   << "\t\t\t\t" <<"Interruption"<<"\t    " << it->getEventTime();
+                            cout<<"\t\t    "  << it->getEventTime(); //-serveStart;
+                            cout<<"\t\t\t    "  << it->getEServId()<< endl;
+                        }
+                        else if(it->getEventType()==cexit)
+                        {
+                            cout   << "\t\t\t\t" <<"Exited"<<"\t\t    "  << it->getEventTime();
+                            cout<<"\t\t    "  << it->getEventTime();//-serveStart;
+                            cout<<"\t\t\t    "  << it->getEServId()<< endl;
+
+                        }
+
+                    }
+                    //cout << "Customer Events Done";
+                    cout<<"\n\n\n\n";
+                }
+
+            }
 
     void Start()
     {
@@ -214,6 +259,9 @@ public:
             checkIntrpt();
             fetchToServers();
             advance();
+            //Report();
+
+
         }
     }
     //void enterWaitingQueue()
@@ -229,10 +277,11 @@ public:
 
 
 ///Departure
-/*
-customer--arrival time--server number--spent time interruption time
---comeback time -- comeback server-- spent time--total spent time or departure
-
+//done:
+//customer--arrival time--interruption time----spent time--comeback time---- spent time--total spent time -- departure
+/*not yet:
+server number
+ -- comeback server
 */
 
 /*
@@ -262,3 +311,6 @@ head=selected;
 */
 
 //Interruptions Per Server
+
+///Customer C1 -> S1 , S2, S3x
+///S1 -> custHistory [C1]
