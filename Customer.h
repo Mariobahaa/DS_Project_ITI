@@ -70,6 +70,10 @@ class Customer
         custHistory.push_back(ce);
     }
 
+    int getServiceTime(){
+        return ServiceTime;
+    }
+
     list<CEvent> getcustHistory()
     {
         return custHistory;
