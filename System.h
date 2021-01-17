@@ -213,10 +213,11 @@ public:
                 {
                     cstmr=*itr;
                     //cout<<"New Customer" << endl;
-                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\n";
+                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\t\tWaitingTime\n";
                     cout << "\t\t\t\t   C" << cstmr->getCustId();
                     cout<<"\t\t    "<<cstmr->getArrival();
                     cout<<"\t\t    "<<cstmr->getTimeSpent();
+                    cout<<"\t\t\t    "<<cstmr->getTimeSpent()-cstmr->getServiceTime();
                     cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\t\tServer\n\n";
                     list<CEvent> cHistory = cstmr->getcustHistory();
                     for(it= cHistory.begin(); it != cHistory.end(); ++it)
