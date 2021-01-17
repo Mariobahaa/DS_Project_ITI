@@ -213,6 +213,7 @@ public:
 
             void Report()
             {
+                   system("CLS");
                 map<Customer*, list<CEvent>> ::iterator itr;
                 list<CEvent>::iterator it;
                 for (itr = Servers.front()->custHistory.begin(); itr != Servers.front()->custHistory.end(); ++itr)
@@ -221,7 +222,7 @@ public:
                     cout << "\t\t\t\t   C" << itr->first->getCustId();
                     cout<<"\t\t    "<<itr->first->getArrival();
                     cout<<"\t\t    "<<itr->first->getTimeSpent();
-                    cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\n\n";
+                    cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\t\tServer\n\n";
                     for(it=itr->second.begin(); it != itr->second.end(); ++it)
                     {
                         int serveStart;
@@ -234,13 +235,15 @@ public:
                         else if(it->getEventType()==1)
                         {
                             cout   << "\t\t\t\t" <<"Interruption"<<"\t    " << it->getEventTime();
-                            cout<<"\t\t    "  << it->getEventTime()-serveStart<<endl;
+                            cout<<"\t\t    "  << it->getEventTime()-serveStart;
+                            //cout<<"\t]t    "  << itr->ServerId<< endl;
                         }
                         else if(it->getEventType()==2)
                         {
                             cout   << "\t\t\t\t" <<"Exited"<<"\t\t    "  << it->getEventTime();
                             cout<<"\t\t    "  << it->getEventTime()-serveStart;
                         }
+
                     }
                     cout<<"\n\n\n\n";
                 }
@@ -255,7 +258,6 @@ public:
             checkIntrpt();
             fetchToServers();
             advance();
-            system("CLS");
             Report();
 
 
@@ -309,3 +311,6 @@ head=selected;
 */
 
 //Interruptions Per Server
+
+///Customer C1 -> S1 , S2, S3x
+///S1 -> custHistory [C1]
