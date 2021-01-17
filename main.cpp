@@ -30,6 +30,7 @@ int main()
         //Customer C(arrival,serviceTime,i+1);
         if(arrival>=0 && serviceTime>=1)
         customers.push_back(new Customer(arrival,serviceTime,i+1));
+        else cout<< "\nNot a valid customer data for customer C"<<i+1<<"\n\n";
     }
 
     list<Server*> servers;

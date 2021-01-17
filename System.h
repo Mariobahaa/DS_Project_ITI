@@ -3,7 +3,6 @@
 #include <iostream>
 #include <queue>
 #include <list>
-#include <vector>
 #include "Customer.h"
 #include "Server.h"
 
@@ -205,20 +204,21 @@ public:
             {
                 system("CLS");
                 if(serversNo<=0 || custNo <= 0){cout<< "Unable to start the system" << endl; return;}
-                cout<< "\t\t\t\t\System Report"<< endl << endl <<endl;
+                cout<< "\n\t\t\t\t\t\t    System Report"<< endl << endl <<endl;
                 list<Customer*>::iterator itr;
                 list<CEvent>::iterator it;
                 Customer* cstmr;
+              // cout<<"no service to process";
                 for (itr = customersCpy.begin(); itr != customersCpy.end(); ++itr)
                 {
                     cstmr=*itr;
                     //cout<<"New Customer" << endl;
-                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\t\tWaitingTime\n";
+                    cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\t   WaitingTime\n";
                     cout << "\t\t\t\t   C" << cstmr->getCustId();
                     cout<<"\t\t    "<<cstmr->getArrival();
                     cout<<"\t\t    "<<cstmr->getTimeSpent();
-                    cout<<"\t\t\t    "<<cstmr->getTimeSpent()-cstmr->getServiceTime();
-                    cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\t\tServer\n\n";
+                    cout<<"\t\t\t"<<cstmr->getTimeSpent()-cstmr->getServiceTime();
+                    cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\t     Server\n\n";
                     list<CEvent> cHistory = cstmr->getcustHistory();
                     for(it= cHistory.begin(); it != cHistory.end(); ++it)
                     {
@@ -229,21 +229,21 @@ public:
                         if(it->getEventType()==cserve)
                         {
                             cout   << "\t\t\t\t" <<"ServeStarted"<<"\t    " <<it->getEventTime();
-                            cout<<"\t\t    "  << "X";
-                           cout<<"\t\t\t    "  << it->getEServId()<< endl;
+                            cout<<"\t\t    "  << "-";
+                           cout<<"\t\t\tS"  << it->getEServId()<< endl;
 
                         }
                         else if(it->getEventType()==cintr)
                         {
                             cout   << "\t\t\t\t" <<"Interruption"<<"\t    " << it->getEventTime();
                             cout<<"\t\t    "  << it->getEventTime(); //-serveStart;
-                            cout<<"\t\t\t    "  << it->getEServId()<< endl;
+                            cout<<"\t\t\tS"  << it->getEServId()<< endl;
                         }
                         else if(it->getEventType()==cexit)
                         {
                             cout   << "\t\t\t\t" <<"Exited"<<"\t\t    "  << it->getEventTime();
                             cout<<"\t\t    "  << it->getEventTime();//-serveStart;
-                            cout<<"\t\t\t    "  << it->getEServId()<< endl;
+                            cout<<"\t\t\tS"  << it->getEServId()<< endl;
 
                         }
 
