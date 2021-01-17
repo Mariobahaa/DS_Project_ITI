@@ -17,9 +17,9 @@ class Server
     //list<SEvent> customerHistory;
 
     Customer * CurrCustomer ; // Currently Served Customer in this Server
-    map<Customer*, list<CEvent>> custHistory;
-public:
     int ServerID;
+public:
+
     Server()
     {
         working = false;
@@ -45,8 +45,8 @@ public:
         CurrCustomer = cst;
     }
 
-    void addEvent(Customer* cst, CEvent ce){
-        custHistory[cst].push_back(ce);
+    int getServerID(){
+        return ServerID;
     }
 };
 
@@ -58,50 +58,33 @@ Customer inc ->  CEvent
 CEvent ptr -> Server <-----
 Server ptr -> Customer
 Customer inc ->  CEvent
-
-
 Event Table:
 Customer, Server, EventType, time
-
-
-
-
-
-
-
-
-
-
-
-
 C2 , 2 , enter , S2
-
 C2 , 4 , exit  , S2
 -------
 C1 , 10, enter , S2
-
 S1:
 C1 , 1 , enter , S1
 C1 , 4 , exit  , S1
-
 S2:
 C2->id , (2 , enter , S2),( 4 , exit  , S2)
 C1 , 10, enter , S2
-
 S3:
 C1 , 20, enter , S3
-
-
-
 ///overhead Report Customer
 Customer inc ->  CEvent
 CEvent ptr -> Server <-----
 Server ptr -> Customer
 Customer inc ->  CEvent
-
 ///overhead Report Customer
 Customer inc ->  CEvent
 Server ptr -> SEvent--> Customer
            -> Server
 */
+
+
+
+///last by mario
+///issue when having multiple servers
 

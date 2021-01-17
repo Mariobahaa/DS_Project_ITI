@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 
-    cout << "\t\t\tWelcome!"<<endl << endl;
+    cout << "\n\t\t\t\t\t\t     Welcome!"<<endl << endl;
     int CustomerNum, ServersNum;
     cout << "Enter Number of Customers" <<endl;
     cin >> CustomerNum;
@@ -66,7 +66,7 @@ int main()
 
     System Sys(customers,servers,interruptions,ServersNum,CustomerNum);
     Sys.Start();
-
+    Sys.Report();
 
     return 0;
 }
@@ -78,7 +78,6 @@ int main()
     Customer* c2 = new Customer(0,0,1);
     c1 = c2;
     cout << c1->getArrival();
-
     Server S1;
    /* custEvent cste=cserve;
     cout << "Hey" << endl << endl;
@@ -92,16 +91,11 @@ int main()
    pair <int, Server*> intr1  (6,&S1);
    pair <int, Server*> intr2  (4,&S1);
    pair <int, Server*> intr3  (2,&S1);
-
  list<pair<int,Server*>> intr;
     intr.push_back(intr1);
     intr.push_back(intr2);
     intr.push_back(intr3);
     //System interr(intr);
-
-
-
-
     /*Customer c1(1,3);
     Customer c2(0,3);
     Customer c3(2,3);
@@ -112,15 +106,12 @@ int main()
     inpt.sort( [](Customer* a, Customer* b) {
         return a->getArrival() < b->getArrival();
     });
-
-
     queue<Customer*> Q;
     list<Customer*>::iterator it;
     for(it=inpt.begin(); it != inpt.end(); ++it)
     {
         Q.push(*it); //enqueue
     }
-
     cout<< "Q Size: " << Q.size() << endl;
     while(!Q.empty()){
         cout << Q.front()->Arrival << endl;
