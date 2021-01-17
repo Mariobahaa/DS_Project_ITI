@@ -28,6 +28,7 @@ class System
     queue<Customer*> waitingQueue;
     queue<pair<int,Server*>> Interruptions; //time,Interrupted Server
     list<Server*> Servers;
+    list<Customer*>customersCpy;
 
     int serversNo;
     int custNo;
@@ -114,9 +115,8 @@ class System
                     Interruptions.front().second->setWorking(false);
 
                     ///!-- Add Event Data in Customer
-                    CEvent custEvent(clock,cintr);
-                    Interruptions.front().
-                    second->addEvent(currCustomer,custEvent);
+                    CEvent custEvent(clock,cintr,Interruptions.front().second->getServerID());
+                    currCustomer->addEvent(custEvent);
                 }
                 Interruptions.pop();
                 cout << "Popped Interruption" << endl;
@@ -136,15 +136,16 @@ class System
                 if(!server->getWorking())
                 {
                     server->setCurrCustomer(waitingQueue.front());
-                    cout << "Serving C" << waitingQueue.front()->getCustId() <<
-                         " in Server " << server->ServerID<<endl;
+//                    cout << "Serving C" << waitingQueue.front()->getCustId() <<
+//                         " in Server " << server->ServerID<<endl;
                     waitingQueue.pop();
                     server->setWorking(true);
 
 
                     ///!-- Add Event Data in Customer
-                    CEvent custEvent(clock,cserve);
-                    server->addEvent(server->getCurrCustomer(),custEvent);
+                    CEvent custEvent(clock,cserve,server->getServerID());
+                   server->getCurrCustomer()->addEvent(custEvent);
+
                 }
             }
         }
@@ -165,9 +166,11 @@ class System
                 {
                     server->setWorking(false);
                     cout << "C" << server->getCurrCustomer()->getCustId() <<"Exiting" << endl;
-                    CEvent custEvent(clock+1,cexit);
+                    CEvent custEvent(clock+1,cexit,server->getServerID());
                     server->getCurrCustomer()->setDeparture(clock+1);
-                    server->addEvent(server->getCurrCustomer(),custEvent);
+                    server->getCurrCustomer()->addEvent(custEvent);
+
+
                 }
 
             }
@@ -183,7 +186,7 @@ public:
         custNo = custNum;
         clock = 0;
         Servers= servers;
-
+        customersCpy=inpt;
         GenerateSortedInputQ(inpt);
         //GenerateServers();
         GenerateSortedIntrptQ(intr);
@@ -214,14 +217,14 @@ public:
             void Report()
             {
                    system("CLS");
-                map<Customer*, list<CEvent>> ::iterator itr;
+                list<Customer*>::iterator itr;
                 list<CEvent>::iterator it;
-                for (itr = Servers.front()->custHistory.begin(); itr != Servers.front()->custHistory.end(); ++itr)
+                for (itr = customersCpy.begin(); itr != customersCpy.end(); ++itr)
                 {
                     cout << "\n\t\t\t\tCustomer\tArrivalTime\tTotalTimeSpent\n";
-                    cout << "\t\t\t\t   C" << itr->first->getCustId();
-                    cout<<"\t\t    "<<itr->first->getArrival();
-                    cout<<"\t\t    "<<itr->first->getTimeSpent();
+                    cout << "\t\t\t\t   C" << itr->getCustId();
+                    cout<<"\t\t    "<<itr->getArrival();
+                    cout<<"\t\t    "<<itr->getTimeSpent();
                     cout<<"\n\n\t\t"<<"\t\tEvent\t\t   Time\t\tServiceDuration\t\tServer\n\n";
                     for(it=itr->second.begin(); it != itr->second.end(); ++it)
                     {

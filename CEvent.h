@@ -16,6 +16,7 @@ class CEvent
     custEvent CEventType;
     int CEventTime;
     int serviceDuration;
+    int EServId;
     //Server* CServer;
     public:
 
@@ -23,9 +24,10 @@ class CEvent
         }
 
         //CEvent(int tm, custEvent evnt,Server* srv){
-        CEvent(int tm, custEvent evnt){
+        CEvent(int tm, custEvent evnt,int sid){
             CEventTime = tm;
             CEventType = evnt;
+            EServId = sid;
             //CServer = srv;
         };
 
@@ -35,6 +37,10 @@ class CEvent
 
         int getEventTime(){
             return CEventTime;
+        }
+
+        int getEServId(){
+            return EServId;
         }
 int getServiceDuration()
 {

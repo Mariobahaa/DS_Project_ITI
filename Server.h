@@ -17,9 +17,9 @@ class Server
     //list<SEvent> customerHistory;
 
     Customer * CurrCustomer ; // Currently Served Customer in this Server
-  public:  map<Customer*, list<CEvent>> custHistory;
-public:
     int ServerID;
+public:
+
     Server()
     {
         working = false;
@@ -45,8 +45,8 @@ public:
         CurrCustomer = cst;
     }
 
-    void addEvent(Customer* cst, CEvent ce){
-        custHistory[cst].push_back(ce);
+    int getServerID(){
+        return ServerID;
     }
 };
 
