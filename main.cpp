@@ -64,5 +64,18 @@ int main()
     Sys.Start();
     Sys.Report();
 
+    list<Server*>::iterator sit;
+    for(sit=servers.begin();sit!=servers.end();++sit)
+    {
+        delete *sit;
+    }
+
+
+    list<Customer*>::iterator cit;
+    for(cit=customers.begin();cit!=customers.end();++cit)
+    {
+        delete *cit;
+    }
+
     return 0;
 }
